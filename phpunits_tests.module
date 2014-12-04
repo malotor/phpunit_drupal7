@@ -1,0 +1,7 @@
+<?php
+
+/**
+ * @file phpunits_tests.module
+ */
+
+require DRUPAL_ROOT . '/vendor/autoload.php';
