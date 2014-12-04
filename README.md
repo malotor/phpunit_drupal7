@@ -1,7 +1,6 @@
 # PHPUnit in Drupal 7
 ================
-
-This module uses [PHPUnit](http://getcomposer.com/) in order create unit tests.
+This Drupal 7 module uses [PHPUnit](http://getcomposer.com/) in order create unit tests.
 
 ## Installation.
 
@@ -11,7 +10,7 @@ Copy file phpunit.example.xml to your Drupal root director an rename it to phpun
 Set the path where your module is installed. You need to point the "src" folder inside the module.
 
 	"psr-4": {
-	    "custom_log\\" : "sites/all/modules/custom/mymodule/src"
+	    "phpunit_tests\\" : "sites/all/modules/custom/phpunit_tests/src"
 	}
 
 You can define all namespaces that you need.
@@ -22,35 +21,37 @@ You can define all namespaces that you need.
 	    "module_three\\" : "profiles/malotor/modules/module_three/src",
 	}
 
-You can define new test suites. I´va created two for this example in order to place my test in the "scr/Tests" folder from my modules or in the profiles folder
+You can define new test suites. I´va created two for this example in order to place my test in the "scr/Tests" folder from my modules in sites/all/modules or profiles/*/modules
 
-<?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         bootstrap="vendor/autoload.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         syntaxCheck="false">
-    <testsuites>
-        <testsuite name="Custom Modules Test Suite">
-            <directory suffix=".php">./sites/all/modules/*/src/Tests</directory>
-            <directory suffix=".php">./sites/all/modules/custom/*/src/Tests</directory>
-        </testsuite>
-        <testsuite name="Profile Custom Modules Test Suite">
-            <directory suffix=".php">./profiles/*/modules/*/src/Tests</directory>
-            <directory suffix=".php">./profiles/*/modules/custom/*/src/Tests</directory>
-        </testsuite>
-    </testsuites>
-</phpunit>
+	<?xml version="1.0" encoding="UTF-8"?>
+	<phpunit backupGlobals="false"
+	         backupStaticAttributes="false"
+	         bootstrap="vendor/autoload.php"
+	         colors="true"
+	         convertErrorsToExceptions="true"
+	         convertNoticesToExceptions="true"
+	         convertWarningsToExceptions="true"
+	         processIsolation="false"
+	         stopOnFailure="false"
+	         syntaxCheck="false">
+	    <testsuites>
+	        <testsuite name="Custom Modules Test Suite">
+	            <directory suffix=".php">./sites/all/modules/*/src/Tests</directory>
+	            <directory suffix=".php">./sites/all/modules/custom/*/src/Tests</directory>
+	        </testsuite>
+	        <testsuite name="Profile Custom Modules Test Suite">
+	            <directory suffix=".php">./profiles/*/modules/*/src/Tests</directory>
+	            <directory suffix=".php">./profiles/*/modules/custom/*/src/Tests</directory>
+	        </testsuite>
+	    </testsuites>
+	</phpunit>
 
 
 Execute composer
 
 	$ composer install
+
+## Usage.
 
 Add autoloader to your modules
 
@@ -68,7 +69,7 @@ Add your tests to src/Tests folder
 
   <?php
 
-    use custom_log\MyClass;
+    use phpunit_tests\MyClass;
 
     /**
      * @group MyModule
@@ -80,11 +81,13 @@ Add your tests to src/Tests folder
         $this->assertTrue($myClassIntance->myMethod());
       }
     }
+  
+Whit @group annotation you can organize your test by groups
 
 Now, you can execute your test withs
 
-$ vendor/bin/phpunit
+	$ vendor/bin/phpunit
 
 If you want to execute only the tests from a module use:
 
-$ vendor/bin/phpunit --group MyModule
+	$ vendor/bin/phpunit --group MyModule
