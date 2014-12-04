@@ -1,5 +1,5 @@
 # PHPUnit in Drupal 7
-================
+
 This Drupal 7 module uses [PHPUnit](http://getcomposer.com/) in order create unit tests.
 
 ## Installation.
